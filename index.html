@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nasrina's Aesthetic Oasis</title>
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Nasrina's Oasis Path</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     
@@ -24,288 +21,190 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #fff5f7; /* Very Soft Blush */
+            background: #fff5f7;
             overflow: hidden;
-        }
-
-        /* --- THE PINK PALACE BACKGROUND --- */
-        #game-bg {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: linear-gradient(135deg, #fff0f5 0%, #fdf2f8 50%, #f0fff4 100%);
-            image-rendering: auto;
-            filter: brightness(1.05);
+            font-family: 'Varela Round', sans-serif;
         }
 
         #game-container {
-            width: 95vw;
-            max-width: 450px;
-            height: 90vh;
+            width: 100vw;
+            height: 100vh;
+            max-width: 500px;
+            max-height: 900px;
             position: relative;
-            background: rgba(255, 255, 255, 0.5);
-            border: 5px solid #ffc1cc; /* Peony Pink */
+            background: linear-gradient(to bottom, #e0f7fa, #fff0f5);
+            border: 8px solid #ffc1cc;
             border-radius: 40px;
-            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.4), inset 0 0 20px rgba(255,255,255,0.8);
             overflow: hidden;
-            backdrop-filter: blur(5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
 
-        /* --- AESTHETIC HEADER 🎀 --- */
-        #ui-layer {
-            height: 60px;
+        /* --- THE MOVING ROAD --- */
+        #sky {
+            position: absolute;
+            top: 0; width: 100%; height: 60%;
+            background: linear-gradient(to bottom, #a1c4fd 0%, #c2e9fb 100%);
+            opacity: 0.5;
+        }
+
+        #road {
+            position: absolute;
+            bottom: 0;
+            width: 200%; /* Double width for looping */
+            height: 40%;
+            background: #fdf2f8;
+            border-top: 6px solid #ffc1cc;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 25px;
-            background: rgba(255, 193, 204, 0.8);
-            border-bottom: 2px solid #fff;
-            color: #fff;
+            align-items: flex-end;
+            animation: moveRoad 10s linear infinite;
+        }
+
+        @keyframes moveRoad {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Decorative Flowers on Path */
+        .path-flower {
+            font-size: 20px;
+            margin-right: 100px;
+            opacity: 0.6;
+        }
+
+        /* --- THE CHARACTER --- */
+        #player {
+            position: absolute;
+            bottom: 30%;
+            left: 50px;
+            font-size: 50px;
+            z-index: 10;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- OBSTACLES & ITEMS --- */
+        .collectible {
+            position: absolute;
+            bottom: 45%;
+            right: -50px;
+            font-size: 30px;
+        }
+
+        /* --- UI --- */
+        #ui {
+            position: absolute;
+            top: 30px;
+            width: 100%;
+            text-align: center;
             font-family: 'Press Start 2P', cursive;
-            font-size: 8px;
-            letter-spacing: 1px;
+            font-size: 10px;
+            color: #db7093;
+            z-index: 100;
         }
 
-        /* --- THE ALICE DIALOGUE (Sage & Rose) 🌿 --- */
-        .alice-box {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            background: rgba(255, 255, 255, 0.95);
-            border: 3px solid #ffc1cc;
-            border-radius: 15px;
-            padding: 12px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 7px;
-            line-height: 1.5;
-            color: #5a7d55; /* Soft Sage */
-            visibility: hidden;
-            z-index: 20;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .alice-name {
-            color: #ff69b4;
-            font-weight: bold;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        /* --- GAME ASSETS --- */
-        #player-basket {
-            position: absolute;
-            bottom: 80px;
-            left: calc(50% - 35px);
-            font-size: 65px;
-            pointer-events: none;
-            filter: drop-shadow(0 10px 10px rgba(255, 182, 193, 0.6));
-        }
-
-        .falling-item {
-            position: absolute;
-            font-size: 38px;
-            pointer-events: none;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-            animation: float 3s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        /* --- START SCREEN (Ethereal) --- */
-        #start-overlay {
+        #start-screen {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(255, 240, 245, 0.95), rgba(240, 255, 244, 0.95));
+            background: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-        }
-
-        h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-style: italic; 
-            font-size: 28px; 
-            color: #db7093; 
-            margin-bottom: 10px;
+            z-index: 200;
             text-align: center;
+            padding: 20px;
         }
+
+        h1 { font-family: 'Playfair Display', serif; font-style: italic; color: #ff69b4; }
         
-        .sub-text {
-            font-family: 'Varela Round', sans-serif;
-            font-size: 12px;
-            color: #88b083;
-            margin-bottom: 30px;
-        }
-
-        #start-btn {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px;
-            padding: 18px 35px;
-            background: #ffc1cc;
-            color: white;
-            border: 3px solid #fff;
+        button {
+            padding: 15px 30px;
             border-radius: 50px;
-            box-shadow: 0 8px 20px rgba(255, 193, 204, 0.4);
-            cursor: pointer;
-            transition: all 0.3s;
+            border: 2px solid #ffc1cc;
+            background: #fff;
+            font-family: 'Press Start 2P';
+            font-size: 8px;
+            color: #db7093;
+            margin-top: 20px;
         }
-        #start-btn:hover { background: #d4edda; color: #5a7d55; }
-
-        /* Mobile Tap Regions */
-        #mobile-controls {
-            display: flex;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 70%; /* Huge tap area */
-            z-index: 5;
-        }
-        .control-zone { flex-grow: 1; }
     </style>
 </head>
-<body>
-
-<div id="game-bg"></div>
+<body onclick="jump()">
 
 <div id="game-container">
-    <div id="ui-layer">
-        <div>SCORE:<span id="score">0</span></div>
-        <div id="level-tag">MOOD:🌱</div>
-    </div>
+    <div id="ui">CHARM LEVEL: <span id="score">0</span></div>
     
-    <div id="play-area" style="height: 100%; position: relative;">
-        <div id="alice-dialog" class="alice-box">
-            <span class="alice-name">Alice</span>
-            <span id="dialog-text">I have been waiting for you!</span>
-        </div>
-        
-        <div id="player-basket">🧺</div>
+    <div id="sky"></div>
+    
+    <div id="player">🎀</div>
+
+    <div id="road">
+        <span class="path-flower">🌸</span><span class="path-flower">🌷</span>
+        <span class="path-flower">🌸</span><span class="path-flower">🌷</span>
+        <span class="path-flower">🌸</span><span class="path-flower">🌷</span>
     </div>
 
-    <div id="start-overlay">
-        <h1>Nasrina's Oasis</h1>
-        <div class="sub-text">a wonderful dream... ✨</div>
-        <button id="start-btn">ENTER GARDEN</button>
-    </div>
-
-    <div id="mobile-controls">
-        <div id="move-left" class="control-zone"></div>
-        <div id="move-right" class="control-zone"></div>
+    <div id="start-screen">
+        <h1>Nasrina's Road to Peace</h1>
+        <p style="color: #88b083; font-style: italic;">tap to jump through the oasis...</p>
+        <button onclick="startGame()">START ADVENTURE</button>
     </div>
 </div>
 
 <script>
-    const playArea = document.getElementById('play-area');
-    const basket = document.getElementById('player-basket');
-    const scoreEl = document.getElementById('score');
-    const levelEl = document.getElementById('level-tag');
-    const startOverlay = document.getElementById('start-overlay');
-    const startBtn = document.getElementById('start-btn');
-    const aliceBox = document.getElementById('alice-dialog');
-    const aliceText = document.getElementById('dialog-text');
-
     let score = 0;
+    let isJumping = false;
     let gameActive = false;
-    let spawnRate = 1100;
-    let itemSpeed = 5;
-    const basketWidth = 70;
 
-    const items = ['🌸', '🍵', '📖', '🕯️', '🌿', '🌷', '✨', '💿', '🦋', '🎀'];
-
-    playArea.addEventListener('mousemove', (e) => {
-        if (!gameActive) return;
-        moveBasketTo(e.clientX);
-    });
-
-    document.getElementById('move-left').addEventListener('touchstart', (e) => {
-        if (!gameActive) return; e.preventDefault(); teleportBasket('left');
-    });
-    document.getElementById('move-right').addEventListener('touchstart', (e) => {
-        if (!gameActive) return; e.preventDefault(); teleportBasket('right');
-    });
-
-    function moveBasketTo(clientX) {
-        const rect = playArea.getBoundingClientRect();
-        let x = clientX - rect.left - (basketWidth / 2);
-        x = Math.max(0, Math.min(x, rect.width - basketWidth));
-        basket.style.left = x + 'px';
+    function startGame() {
+        document.getElementById('start-screen').style.display = 'none';
+        gameActive = true;
+        spawnItem();
     }
 
-    function teleportBasket(side) {
-        const rect = playArea.getBoundingClientRect();
-        if(side === 'left') basket.style.left = '20px';
-        else basket.style.left = (rect.width - basketWidth - 20) + 'px';
-    }
-
-    function showDialog(text, delay) {
-        gameActive = false;
-        aliceText.innerText = text;
-        aliceBox.style.visibility = 'visible';
+    function jump() {
+        if (!gameActive || isJumping) return;
+        isJumping = true;
+        const player = document.getElementById('player');
+        player.style.bottom = '55%';
+        
         setTimeout(() => {
-            aliceBox.style.visibility = 'hidden';
-            gameActive = true;
-            createItem();
-        }, delay);
+            player.style.bottom = '30%';
+            setTimeout(() => { isJumping = false; }, 400);
+        }, 400);
     }
 
-    function checkLevelUp() {
-        if (score === 10) {
-            levelEl.innerText = "MOOD:🌷";
-            spawnRate = 800; itemSpeed = 7;
-            showDialog("The garden is blooming for you! 🌷", 2000);
-        } else if (score === 25) {
-            levelEl.innerText = "MOOD:✨";
-            spawnRate = 500; itemSpeed = 9;
-            showDialog("Look like a wonderful dream... ✨", 2000);
-        }
-    }
-
-    function createItem() {
+    function spawnItem() {
         if (!gameActive) return;
         const item = document.createElement('div');
-        item.className = 'falling-item';
+        item.className = 'collectible';
+        const items = ['🍵', '💿', '📖', '✨', '🧘‍♀️'];
         item.innerText = items[Math.floor(Math.random() * items.length)];
-        
-        const rect = playArea.getBoundingClientRect();
-        item.style.left = Math.random() * (rect.width - 40) + 'px';
-        item.style.top = '-60px';
-        playArea.appendChild(item);
+        document.getElementById('game-container').appendChild(item);
 
-        let top = -60;
-        const fallInterval = setInterval(() => {
-            if (!gameActive) { clearInterval(fallInterval); return;}
-            top += itemSpeed;
-            item.style.top = top + 'px';
+        let pos = 500;
+        const moveInt = setInterval(() => {
+            pos -= 5;
+            item.style.left = pos + 'px';
 
-            const bRect = basket.getBoundingClientRect();
+            // Check collision
+            const pRect = document.getElementById('player').getBoundingClientRect();
             const iRect = item.getBoundingClientRect();
 
-            if (iRect.bottom >= bRect.top + 20 && iRect.right >= bRect.left && iRect.left <= bRect.right && iRect.top <= bRect.bottom) {
+            if (iRect.left < pRect.right && iRect.right > pRect.left && iRect.top < pRect.bottom && iRect.bottom > pRect.top) {
                 score++;
-                scoreEl.innerText = score;
-                checkLevelUp();
+                document.getElementById('score').innerText = score;
                 item.remove();
-                clearInterval(fallInterval);
+                clearInterval(moveInt);
             }
-            if (top > rect.height) { item.remove(); clearInterval(fallInterval); }
+
+            if (pos < -50) {
+                item.remove();
+                clearInterval(moveInt);
+            }
         }, 20);
 
-        setTimeout(createItem, spawnRate);
+        setTimeout(spawnItem, 2000 + Math.random() * 2000);
     }
-
-    startBtn.addEventListener('click', () => {
-        gameActive = true;
-        score = 0;
-        scoreEl.innerText = score;
-        startOverlay.style.display = 'none';
-        createItem();
-    });
 </script>
 </body>
 </html>
