@@ -3,87 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nasrina's Garden Catch</title>
+    <title>Nasrina's Adventure Oasis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
+            /* YOUR CUSTOM CURSOR 🌸 */
+            cursor: url('https://cdn.cursors-4u.net/previews/pink-flowers-6f858f86-32.webp') 32 32, auto !important;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #f0fff4 0%, #fff0f5 50%, #f0fff4 100%);
             font-family: 'Playfair Display', serif;
             overflow: hidden;
-            cursor: none;
+            transition: background 2s ease;
+            background: linear-gradient(135deg, #f0fff4 0%, #fff0f5 100%);
         }
+
+        /* Level Backgrounds */
+        body.level-2 { background: linear-gradient(135deg, #e6fffa 0%, #fbc2eb 100%); }
+        body.level-3 { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); }
+        body.level-master { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+
         #game-container {
-            width: 100%;
-            max-width: 600px;
-            height: 80vh;
+            width: 90vw;
+            max-width: 700px;
+            height: 85vh;
             position: relative;
-            border: 4px solid white;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 50px rgba(255, 182, 193, 0.4);
+            border: 8px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 25px 60px rgba(255, 182, 193, 0.5);
+            overflow: hidden;
         }
-        #score-board {
+
+        #ui-layer {
             position: absolute;
             top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #2d5a27;
-            font-size: 1.5rem;
-            font-style: italic;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             z-index: 10;
+            pointer-events: none;
         }
+
+        #score-board { color: #2d5a27; font-size: 1.8rem; font-weight: bold; }
+        #level-tag { color: #ff69b4; font-style: italic; font-size: 1.1rem; }
+
         #player-basket {
             position: absolute;
-            bottom: 30px;
-            font-size: 60px;
+            bottom: 40px;
+            font-size: 70px;
             pointer-events: none;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
         }
+
         .falling-item {
             position: absolute;
-            font-size: 35px;
+            font-size: 40px;
             pointer-events: none;
+            animation: sway 2s infinite ease-in-out;
         }
+
+        @keyframes sway {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(10px) rotate(10deg); }
+        }
+
         #start-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
             border-radius: 40px;
-            cursor: default;
         }
-        h1 { color: #ff69b4; font-style: italic; margin-bottom: 20px; }
+
+        h1 { color: #ff69b4; font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px white; }
+        p { color: #2d5a27; margin-bottom: 30px; font-style: italic; }
+
         #start-btn {
-            padding: 20px 40px;
-            font-size: 1.2rem;
-            background: #c6f6d5;
-            color: #2d5a27;
-            border: 2px solid white;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            background: #ffc1cc;
+            color: white;
+            border: none;
             border-radius: 100px;
-            cursor: pointer;
-            font-style: italic;
+            box-shadow: 0 10px 20px rgba(255, 193, 204, 0.4);
             transition: 0.3s;
         }
-        #start-btn:hover { transform: scale(1.1); background: #ffc1cc; }
+
+        #start-btn:hover { transform: scale(1.1); background: #c6f6d5; color: #2d5a27; }
+
+        /* Floating Cloud Decor */
+        .cloud {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.2;
+            z-index: -1;
+            animation: drift 20s infinite linear;
+        }
+
+        @keyframes drift {
+            from { left: -150px; }
+            to { left: 100%; }
+        }
     </style>
 </head>
 <body>
 
+<div class="cloud" style="top: 10%; animation-delay: 0s;">☁️</div>
+<div class="cloud" style="top: 40%; animation-delay: -10s;">☁️</div>
+
 <div id="game-container">
-    <div id="score-board">inner peace: <span id="score">0</span></div>
+    <div id="ui-layer">
+        <div id="score-board">inner peace: <span id="score">0</span></div>
+        <div id="level-tag">current mood: peaceful sprout 🌱</div>
+    </div>
+    
     <div id="player-basket">🧺</div>
+    
     <div id="start-overlay">
-        <h1>Nasrina's Oasis</h1>
-        <button id="start-btn">catch some self-care</button>
+        <h1>The Oasis Adventure</h1>
+        <p>collect the items to help your garden grow...</p>
+        <button id="start-btn">begin your journey</button>
     </div>
 </div>
 
@@ -91,12 +143,15 @@
     const container = document.getElementById('game-container');
     const basket = document.getElementById('player-basket');
     const scoreEl = document.getElementById('score');
+    const levelEl = document.getElementById('level-tag');
     const startOverlay = document.getElementById('start-overlay');
     const startBtn = document.getElementById('start-btn');
+    const body = document.body;
 
     let score = 0;
     let gameActive = false;
-    const items = ['🌸', '🍵', '📖', '🕯️', '🌿', '🌷', '🧘‍♀️'];
+    let spawnRate = 900;
+    const items = ['🌸', '🍵', '📖', '🕯️', '🌿', '🌷', '🧘‍♀️', '✨'];
 
     container.addEventListener('mousemove', (e) => {
         if (!gameActive) return;
@@ -106,17 +161,33 @@
         basket.style.left = x + 'px';
     });
 
+    function updateDifficulty() {
+        if (score === 10) {
+            levelEl.innerText = "current mood: blooming flower 🌷";
+            body.className = "level-2";
+            spawnRate = 700;
+        } else if (score === 25) {
+            levelEl.innerText = "current mood: lush sanctuary 🌿";
+            body.className = "level-3";
+            spawnRate = 500;
+        } else if (score === 50) {
+            levelEl.innerText = "current mood: oasis master 👑";
+            body.className = "level-master";
+            spawnRate = 400;
+        }
+    }
+
     function createItem() {
         if (!gameActive) return;
         const item = document.createElement('div');
         item.className = 'falling-item';
         item.innerText = items[Math.floor(Math.random() * items.length)];
-        item.style.left = Math.random() * (container.offsetWidth - 40) + 'px';
-        item.style.top = '-50px';
+        item.style.left = Math.random() * (container.offsetWidth - 50) + 'px';
+        item.style.top = '-60px';
         container.appendChild(item);
 
-        let top = -50;
-        let speed = 3 + Math.random() * 4;
+        let top = -60;
+        let speed = 4 + (score * 0.1); // Gets faster as you play!
 
         const fallInterval = setInterval(() => {
             top += speed;
@@ -128,6 +199,7 @@
             if (iRect.bottom >= bRect.top && iRect.right >= bRect.left && iRect.left <= bRect.right && iRect.top <= bRect.bottom) {
                 score++;
                 scoreEl.innerText = score;
+                updateDifficulty();
                 item.remove();
                 clearInterval(fallInterval);
             }
@@ -136,6 +208,8 @@
                 clearInterval(fallInterval);
             }
         }, 20);
+
+        setTimeout(createItem, spawnRate);
     }
 
     startBtn.addEventListener('click', () => {
@@ -143,7 +217,7 @@
         score = 0;
         scoreEl.innerText = score;
         startOverlay.style.display = 'none';
-        setInterval(createItem, 700);
+        createItem();
     });
 </script>
 </body>
