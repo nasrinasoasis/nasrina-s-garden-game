@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasrina's Oasis | Daily Affirmations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #fbc2eb 0%, #fff0f5 100%);
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .mirror-frame {
+            width: 85%; max-width: 400px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border: 5px solid white;
+            border-radius: 100px 100px 20px 20px; /* Arch shape like a mirror */
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 { color: #ff69b4; font-size: 1.8rem; margin-bottom: 30px; }
+        
+        #affirmation-text {
+            font-size: 1.4rem;
+            color: #db7093;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            line-height: 1.4;
+            transition: opacity 0.5s ease;
+        }
+
+        .sparkle-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: white;
+            border: 2px solid #ffc1cc;
+            border-radius: 50px;
+            color: #db7093;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
+        }
+
+        .sparkle-btn:hover {
+            background: #ffeff2;
+            transform: scale(1.05);
+        }
+
+        .flower-icon { font-size: 30px; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="mirror-frame">
+    <span class="flower-icon">🌸</span>
+    <h1>Oasis Mirror</h1>
+    <div id="affirmation-text">Tap the button for a reminder of your light...</div>
+    <button class="sparkle-btn" onclick="generateAffirmation()">Reveal My Affirmation ✨</button>
+</div>
+
+<script>
+    const affirmations = [
+        "I am a beautiful, kind, and capable student of life. ✨",
+        "My Oasis is a place of peace and growth. 🌿",
+        "I deserve all the soft and lovely things the world has to offer. 🎀",
+        "Every step I take is leading me toward my highest self. 👑",
+        "I am resilient, I am loved, and I am enough. 💕",
+        "My creativity knows no bounds. 🎨",
+        "I protect my peace and nourish my soul daily. 🐚",
+        "I am the queen of my own journey. 🏰",
+        "Gentleness is my superpower. ☁️",
+        "I am worthy of success in all my business and creative dreams. 📈"
+    ];
+
+    function generateAffirmation() {
+        const textEl = document.getElementById('affirmation-text');
+        textEl.style.opacity = 0;
+        
+        setTimeout(() => {
+            const randomIndex = Math.floor(Math.random() * affirmations.length);
+            textEl.innerText = affirmations[randomIndex];
+            textEl.style.opacity = 1;
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
