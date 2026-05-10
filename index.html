@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nasrina's Lush Oasis</title>
+    <title>Nasrina's Pink Palace Oasis</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     
@@ -11,79 +11,61 @@
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            cursor: url('https://cdn.cursors-4u.net/previews/pink-flowers-6f858f86-32.webp') 32 32, auto !important;
+            margin: 0; padding: 0;
         }
 
         body, html {
-            margin: 0; padding: 0; height: 100%;
-            display: flex; justify-content: center; align-items: center;
+            height: 100%; width: 100%;
             background: #fff5f7; overflow: hidden;
             font-family: 'Playfair Display', serif;
+            display: flex; justify-content: center; align-items: center;
         }
 
+        /* --- RESPONSIVE CONTAINER --- */
         #game-container {
             width: 100vw; height: 100vh;
-            max-width: 450px; position: relative;
-            background: linear-gradient(to bottom, #fbc2eb 0%, #a6c1ee 100%);
+            position: relative;
+            background: linear-gradient(180deg, #fbc2eb 0%, #a6c1ee 100%);
             overflow: hidden;
-            border: 8px solid #ffc1cc;
+            display: flex; flex-direction: column;
         }
 
-        /* --- THE GARDEN LAYERS --- */
-        .layer {
-            position: absolute; bottom: 30%; width: 200%;
-            display: flex; align-items: flex-end;
-            animation: walk 15s linear infinite;
-            pointer-events: none;
-        }
-
-        #back-trees { z-index: 2; opacity: 0.5; animation-duration: 30s; font-size: 100px; }
-        #front-flowers { z-index: 4; animation-duration: 12s; font-size: 60px; }
-
-        @keyframes walk {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        /* --- THE PATH --- */
-        #path {
-            position: absolute; bottom: 0; width: 100%; height: 30%;
-            background: #fff; border-top: 5px solid #ffc1cc;
-            z-index: 10;
-        }
-
-        /* --- THE CHARACTER --- */
-        #player {
-            position: absolute; bottom: 22%; left: 50px;
-            font-size: 60px; z-index: 100;
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* --- ALICE'S DIALOGUE --- */
-        #alice-box {
-            position: absolute; top: 70px; left: 50%;
-            transform: translateX(-50%); width: 85%;
+        /* --- THE NASRINA DIALOGUE --- */
+        #nasrina-box {
+            position: absolute; top: 10%; left: 50%;
+            transform: translateX(-50%); width: 90%; max-width: 400px;
             background: rgba(255, 255, 255, 0.9);
             border: 3px solid #ffc1cc; border-radius: 20px;
             padding: 15px; font-family: 'Press Start 2P', cursive;
-            font-size: 7px; color: #5a7d55; z-index: 1000;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            font-size: 8px; color: #5a7d55; z-index: 1000;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3);
         }
 
-        /* --- FLOATING PETALS --- */
+        #quest-text { display: block; margin-top: 5px; line-height: 1.5; }
+
+        /* --- THE PLAYER (PINK FLOWER) --- */
+        #player {
+            position: absolute; bottom: 20%; left: 15%;
+            font-size: 60px; z-index: 100;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 5px 15px rgba(255,105,180,0.4));
+        }
+
+        /* --- GARDEN LAYERS --- */
         .petal {
             position: absolute; color: #ffc1cc; font-size: 20px;
-            z-index: 20; animation: fall 5s linear infinite;
+            z-index: 20; animation: fall 6s linear infinite;
         }
         @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) translateX(100px) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
         .collectible {
-            position: absolute; bottom: 40%; font-size: 35px; z-index: 50;
+            position: absolute; bottom: 35%; font-size: 40px; z-index: 50;
         }
 
+        /* --- START SCREEN --- */
         #start-screen {
             position: absolute; inset: 0; background: white;
             z-index: 2000; display: flex; flex-direction: column;
@@ -91,36 +73,26 @@
         }
 
         button {
-            padding: 20px 40px; border-radius: 50px; border: 2px solid #ffc1cc;
-            background: white; font-family: 'Press Start 2P'; font-size: 8px;
-            color: #db7093; margin-top: 20px;
+            padding: 15px 35px; border-radius: 50px; border: 2px solid #ffc1cc;
+            background: white; font-family: 'Press Start 2P'; font-size: 10px;
+            color: #db7093; margin-top: 20px; cursor: pointer;
         }
     </style>
 </head>
 <body onclick="jump()" ontouchstart="jump()">
 
 <div id="game-container">
-    <div id="back-trees" class="layer">
-        🌳 🏛️ 🌳 🌳 🏛️ 🌳 🌳 🏛️ 🌳 🌳
+    <div id="nasrina-box">
+        <span style="color: #ff69b4;">Nasrina:</span>
+        <span id="quest-text">Welcome to the Pink Palace! Help me gather 5 sparkles...</span>
     </div>
 
-    <div id="front-flowers" class="layer">
-        🌸 🌷 🌿 🌸 🌷 🌿 🌸 🌷 🌿 🌸 🌷 🌿
-    </div>
-
-    <div id="path"></div>
-    
-    <div id="player">🧚‍♀️</div>
-
-    <div id="alice-box">
-        <span style="color: #ff69b4;">Alice:</span><br>
-        <span id="quest-text">It's a beautiful day in the Oasis! Help me find 5 flowers...</span>
-    </div>
+    <div id="player">🌸</div>
 
     <div id="start-screen">
-        <h1 style="font-style: italic; color: #ffb6c1;">The Lush Garden</h1>
-        <p style="color: #88b083;">a peaceful adventure</p>
-        <button onclick="startGame(event)">ENTER GARDEN</button>
+        <h1 style="font-style: italic; color: #ffb6c1; font-size: 32px;">Nasrina's Oasis</h1>
+        <p style="color: #88b083;">tap to float through the garden</p>
+        <button onclick="startGame(event)">ENTER PALACE</button>
     </div>
 </div>
 
@@ -134,28 +106,26 @@
         e.stopPropagation();
         document.getElementById('start-screen').style.display = 'none';
         gameActive = true;
-        createPetals();
+        setInterval(createPetal, 1500);
         spawnItem();
     }
 
-    function createPetals() {
-        setInterval(() => {
-            if(!gameActive) return;
-            const petal = document.createElement('div');
-            petal.className = 'petal';
-            petal.innerText = '🌸';
-            petal.style.left = Math.random() * 100 + 'vw';
-            container.appendChild(petal);
-            setTimeout(() => petal.remove(), 5000);
-        }, 1000);
+    function createPetal() {
+        if(!gameActive) return;
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.innerText = '🌸';
+        petal.style.left = Math.random() * 100 + 'vw';
+        container.appendChild(petal);
+        setTimeout(() => petal.remove(), 6000);
     }
 
     function jump() {
         if (!gameActive || isJumping) return;
         isJumping = true;
-        player.style.bottom = '50%';
+        player.style.bottom = '55%';
         setTimeout(() => {
-            player.style.bottom = '22%';
+            player.style.bottom = '20%';
             setTimeout(() => { isJumping = false; }, 400);
         }, 400);
     }
@@ -164,26 +134,28 @@
         if (!gameActive) return;
         const item = document.createElement('div');
         item.className = 'collectible';
-        item.innerText = ['🎀', '✨', '💿', '🍵'][Math.floor(Math.random() * 4)];
+        item.innerText = ['✨', '💎', '🎀', '💿'][Math.floor(Math.random() * 4)];
+        item.style.left = '110vw';
         container.appendChild(item);
 
-        let pos = 500;
+        let pos = 110;
         const moveInt = setInterval(() => {
             if(!gameActive) return;
-            pos -= 5;
-            item.style.left = pos + 'px';
-
+            pos -= 1;
+            item.style.left = pos + 'vw';
+            
             const pRect = player.getBoundingClientRect();
             const iRect = item.getBoundingClientRect();
 
-            if (iRect.left < pRect.right - 10 && iRect.right > pRect.left + 10 && iRect.top < pRect.bottom && iRect.bottom > pRect.top) {
+            if (iRect.left < pRect.right - 10 && iRect.right > pRect.left + 10 && 
+                iRect.top < pRect.bottom && iRect.bottom > pRect.top) {
                 score++;
-                if (score === 5) questText.innerText = "Alice: You're doing so well! Let's find 10 tea cups.";
+                if (score === 5) questText.innerText = "You've got the glow! Now let's find 10 ribbons.";
                 item.remove(); clearInterval(moveInt);
             }
-            if (pos < -50) { item.remove(); clearInterval(moveInt); }
+            if (pos < -20) { item.remove(); clearInterval(moveInt); }
         }, 20);
-        setTimeout(spawnItem, 3000);
+        setTimeout(spawnItem, 3500);
     }
 </script>
 </body>
